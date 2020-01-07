@@ -5,15 +5,15 @@
     dest: /etc/privoxy/config
 
 - set_fact:
-    ssh_proxy: "-o ProxyCommand='corkscrew {{ http_proxy }} %h %p'"
+    ssh_proxy: "-o ProxyCommand='corkscrew {{ http_proxy.split(':')[0] }} {{ http_proxy.split(':')[1] }} %h %p'"
   when: 
-    - http_proxy is defined
+    - http_proxy | length > 0
 
 - set_fact:
     ssh_proxy: "-o ProxyCommand=\"nc --proxy-type socks5 --proxy {{ socks_proxy }} %h %p\""
   when:
-    - socks_proxy is defined
-    - http_proxy is not defined
+    - socks_proxy | length > 0
+    - http_proxy | length == 0
 
 - name: Create ssh tunnel
   shell: nohup ssh -D 25000 -f -o StrictHostKeyChecking=no {{ ssh_proxy }} -C -q -N -S /tmp/.ssh-gtw -M {{ tunnel }} &

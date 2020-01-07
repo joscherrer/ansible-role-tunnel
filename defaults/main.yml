@@ -1,2 +1,5 @@
 ---
 # defaults file for ansible-role-tunnel
+
+socks_proxy: ""
+http_proxy: ""
