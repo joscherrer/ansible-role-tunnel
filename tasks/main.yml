@@ -1,0 +1,5 @@
+---
+# tasks file for ansible-role-tunnel
+
+- import_tasks: "{{ ansible_os_family }}.yml"
+- import_tasks: "set_tunnel.yml"

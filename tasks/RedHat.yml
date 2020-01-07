@@ -1,0 +1,5 @@
+- name: Installing privoxy
+  become: yes
+  package:
+    name: privoxy
+    state: present

@@ -1,0 +1,14 @@
+- name: Destroying ssh tunnel
+  shell: ssh -S /tmp/.ssh-gtw -O exit {{ tunnel }}
+
+- name: Shutting down privoxy
+  become: yes
+  service:
+    name: privoxy
+    state: stopped
+
+- name: Uninstalling privoxy
+  become: yes
+  package:
+    name: privoxy
+    state: absent
